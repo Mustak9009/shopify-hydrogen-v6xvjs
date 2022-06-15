@@ -17,7 +17,6 @@ const Header = () => {
               >
                 Your Store
               </Link>
-
               <div className="hover:opacity-80 cursor-pointer">
                 <CartIcon />
               </div>
