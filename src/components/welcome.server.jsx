@@ -1,7 +1,7 @@
 import React from "react";
 
 const Welcome = () => {
-  return <div>Welcome</div>;
+  return <div className="text-red-500">Welcome</div>;
 };
 
 export default Welcome;
