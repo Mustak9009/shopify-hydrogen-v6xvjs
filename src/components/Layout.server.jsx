@@ -3,8 +3,8 @@ import { LocalizationProvider, useShop } from "@shopify/hydrogen";
 import { Suspense } from "react";
 import Header from "./Header.client";
 const Layout = ({ children }) => {
-  const { locale } = useShop();
-  console.log(locale);
+  const { storefrontApiVersion } = useShop(); //useShop hook provides access to values of (hydrogen.config.js) file (keys)
+  console.log(storefrontApiVersion);
   return (
     <LocalizationProvider preload="*">
       <Header />
