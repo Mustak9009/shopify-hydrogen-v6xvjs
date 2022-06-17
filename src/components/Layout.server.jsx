@@ -17,7 +17,7 @@ const Layout = ({ children }) => {
 
   return (
     <>
-      <Header data={data} />
+      <Header />
       <Suspense fallback={null}>{children}</Suspense>
     </>
   );

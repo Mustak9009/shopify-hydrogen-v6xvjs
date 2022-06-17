@@ -3,8 +3,7 @@ import CountrySelector from "./CountrySelector";
 import Navigation from "./Navigation.client";
 import { Link } from "@shopify/hydrogen";
 import CartIcon from "./CartIcon";
-const Header = ({ data }) => {
-  console.log(data);
+const Header = () => {
   return (
     <>
       <header className="h-20 lg:h-32 text-gray-700" role="banner">
