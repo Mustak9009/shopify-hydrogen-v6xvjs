@@ -16,10 +16,10 @@ const Layout = ({ children }) => {
   }); //https://shopify.dev/api/hydrogen/hooks/global/useshopquery
 
   return (
-    <>
+    <LocalizationProvider>
       <Header />
       <Suspense fallback={null}>{children}</Suspense>
-    </>
+    </LocalizationProvider>
   );
 };
 
