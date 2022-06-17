@@ -16,7 +16,7 @@ const Layout = ({ children }) => {
   }); //https://shopify.dev/api/hydrogen/hooks/global/useshopquery
 
   return (
-    <LocalizationProvider>
+    <LocalizationProvider preload="*">
       <Header />
       <Suspense fallback={null}>{children}</Suspense>
     </LocalizationProvider>
