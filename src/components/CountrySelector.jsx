@@ -1,7 +1,7 @@
 import React from "react";
 
 const CountrySelector = () => {
-  return <div>CountrySelector</div>;
+    return <div>India ^</div>;
 };
 
 export default CountrySelector;

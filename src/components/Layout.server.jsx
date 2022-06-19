@@ -30,7 +30,7 @@ const Layout = ({children}) => {
       <Suspense fallback={null}>{children}</Suspense>
     </LocalizationProvider>
   );
-};
+};  
 
 const QUERY = gql`
   query layoutContent($language: LanguageCode, $numCollections: Int!)

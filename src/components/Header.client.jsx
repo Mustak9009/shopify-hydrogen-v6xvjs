@@ -13,13 +13,13 @@ const Header = ({collections, shopName}) => {
             <div className="text-center w-full flex justify-between items-center">
               <CountrySelector />
               <Link
-                className="font-black uppercase text-3xl tracking-widest pl-14"
+                className="font-black uppercase text-3xl tracking-widest pl-8"
                 to="/"
               >
                 {shopName}
               </Link>
-              <div className="cursor-pointer flex justify-end w-20 lg:w-40">
-                <Link to='/account'>
+              <div className="cursor-pointer flex justify-end ">
+                <Link to="/account">
                   <AccountIcon />
                 </Link>
                 <CartIcon />
