@@ -10,4 +10,7 @@ export default defineConfig({
     testTimeout: 10000,
     hookTimeout: 10000,
   },
+  esbuild: {
+    logOverride: { 'this-is-undefined-in-esm': 'silent' }
+  }
 });

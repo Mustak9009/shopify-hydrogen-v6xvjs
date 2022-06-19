@@ -1,9 +1,10 @@
-import React from "react";
-import CountrySelector from "./CountrySelector";
-import Navigation from "./Navigation.client";
-import { Link } from "@shopify/hydrogen";
-import CartIcon from "./CartIcon";
-const Header = () => {
+import React from 'react';
+import CountrySelector from './CountrySelector';
+import Navigation from './Navigation.client';
+import {Link} from '@shopify/hydrogen';
+import CartIcon from './CartIcon';
+import AccountIcon from './AccountIcon';
+const Header = ({collections, shopName}) => {
   return (
     <>
       <header className="h-20 lg:h-32 text-gray-700" role="banner">
@@ -12,16 +13,19 @@ const Header = () => {
             <div className="text-center w-full flex justify-between items-center">
               <CountrySelector />
               <Link
-                className="font-black uppercase text-3xl tracking-widest"
+                className="font-black uppercase text-3xl tracking-widest pl-14"
                 to="/"
               >
-                Your Store
+                {shopName}
               </Link>
-              <div className="hover:opacity-80 cursor-pointer">
+              <div className="cursor-pointer flex justify-end w-20 lg:w-40">
+                <Link to='/account'>
+                  <AccountIcon />
+                </Link>
                 <CartIcon />
               </div>
             </div>
-            <Navigation />
+            <Navigation collections={collections} />
           </div>
         </div>
       </header>

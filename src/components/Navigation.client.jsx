@@ -1,28 +1,19 @@
-import React from "react";
-import { Link } from "@shopify/hydrogen";
-const Navigation = () => {
+import React from 'react';
+import {Link} from '@shopify/hydrogen';
+const Navigation = ({collections}) => {
   return (
     <>
       <nav className="hidden lg:block text-center">
-        <ul className="md:flex items-center justify-center pl-14">
-          <li>
-            {" "}
-            <Link className="block p-4 hover:opacity-80" to="/">
-              Freestyle
-            </Link>{" "}
-          </li>
-          <li>
-            {" "}
-            <Link className="block p-4 hover:opacity-80" to="/">
-              Backcountry
-            </Link>{" "}
-          </li>
-          <li>
-            {" "}
-            <Link className="block p-4 hover:opacity-80" to="/">
-              Thermals and Layers
-            </Link>{" "}
-          </li>
+        <ul className="md:flex items-center justify-center ">
+          {collections.map((collection) => {
+            return (
+              <li key={collection.id}>
+                <Link className="block p-4 hover:opacity-80 capitalize" to={`/collections/${collection.handle}`}>
+                  {collection.title}
+                </Link>
+              </li>
+            );
+          })}
         </ul>
       </nav>
     </>
