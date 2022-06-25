@@ -11,7 +11,7 @@ export default defineConfig({
     storefrontToken: "26d26690b1d1718a534fc479d9a93ea5",
     storefrontApiVersion: "2022-07",
   },
-  session: CookieSessionStorage("__session", {
+  session: CookieSessionStorage("__session", { //https://shopify.dev/api/hydrogen/components/framework/cookie
     path: "/",
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
