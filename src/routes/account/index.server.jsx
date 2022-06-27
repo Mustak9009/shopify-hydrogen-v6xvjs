@@ -1,9 +1,11 @@
-import React from 'react'
-
+import React from 'react';
+import Layout from '../../components/Layout.server';
 const Index = () => {
   return (
-    <div>Index</div>
-  )
-}
+    <Layout>
+      <div>Account page</div>
+    </Layout>
+  );
+};
 
-export default Index
+export default Index;
