@@ -7,8 +7,8 @@ import {
 
 export default defineConfig({
   shopify: {
-    storeDomain: "customiziedwithhydrogen.myshopify.com",
-    storefrontToken: "26d26690b1d1718a534fc479d9a93ea5",
+    storeDomain: "hydrogen-learning-2.myshopify.com",
+    storefrontToken: "5177694b3b70ead42a20084a5466018c",
     storefrontApiVersion: "2022-07",
   },
   session: CookieSessionStorage("__session", { //https://shopify.dev/api/hydrogen/components/framework/cookie

@@ -1,6 +1,8 @@
 import React from 'react';
+import {useRouteParams} from '@shopify/hydrogen';
 import Layout from '../../components/Layout.server';
-const Index = () => {
+const Account = ({response, editingAccount, editingAddress}) => {
+ console.log(response)
   return (
     <Layout>
       <div>Account page</div>
@@ -8,4 +10,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default Account;
