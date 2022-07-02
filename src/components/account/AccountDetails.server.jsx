@@ -1,7 +1,9 @@
 import React from 'react'
 
-export const AccountDetails = () => {
+function AccountDetails() {
   return (
     <div>AccountDetails</div>
   )
 }
+
+export default AccountDetails

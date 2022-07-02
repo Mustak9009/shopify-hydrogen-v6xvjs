@@ -73,7 +73,7 @@ export default function AccountCreate() {
                 autoComplete="email"
                 placeholder="Email address"
                 aria-label="Email address"
-                className="mb-1 appearance-none border w-full  py-2 px-3 text-gray-800 placeholder:text-gray-500 leading-tight  focus:shadow-sm border-gray-900"
+                className={`mb-1 appearance-none border w-full  py-2 px-3 text-gray-800 placeholder:text-gray-500 leading-tight  focus:shadow-sm border-gray-900  ${emailError ? ' border-red-500' : 'border-gray-900'}`}
               />
               <p
                 className={`text-red-500 text-xs ${
@@ -96,7 +96,7 @@ export default function AccountCreate() {
                 autoComplete="current-password"
                 placeholder="Password"
                 aria-label="Password"
-                className="mb-1 appearance-none border w-full  py-2 px-3 text-gray-800 placeholder:text-gray-500 leading-tight  focus:shadow-sm border-gray-900"
+                className={`mb-1 appearance-none border w-full  py-2 px-3 text-gray-800 placeholder:text-gray-500 leading-tight  focus:shadow-sm border-gray-900  ${passwordError ? ' border-red-500' : 'border-gray-900'}`}
               />
               <p
                 className={`text-red-500 text-xs ${

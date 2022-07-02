@@ -6,10 +6,11 @@ import {NoStore, Seo,gql} from '@shopify/hydrogen';
 export default function Register({response}){
   response.cache(NoStore())
   return (
-    <Layout>
+    <Layout children={
+    <>
       <Seo type="noindex" data={{title: 'Register'}} />
       <AccountCreateForm/>
-    </Layout>
+    </>}/>
   )
 }
 

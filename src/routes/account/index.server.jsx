@@ -1,12 +1,11 @@
 import React from 'react';
-import {useRouteParams} from '@shopify/hydrogen';
+import {useSession} from '@shopify/hydrogen';
 import Layout from '../../components/Layout.server';
+import AccountDetails from '../../components/account/AccountDetails.server';
 const Account = ({response, editingAccount, editingAddress}) => {
- console.log(response)
+  const {customerAccessToken} = useSession();
   return (
-    <Layout>
-      <div>Account page</div>
-    </Layout>
+    <Layout children={<AccountDetails/>}/>
   );
 };
 
