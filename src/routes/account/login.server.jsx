@@ -4,7 +4,7 @@ import LoginForm from '../../components/account/LoginForm.client';
 import Layout from '../../components/Layout.server';
 export default function Login({ response }) {
   response.cache(NoStore());
-  const { data } = useShopQuery({
+  const {data: {shop: {name}}} = useShopQuery({
     query: QUERY,
     cache: CacheDays(),
     preload: "*"
@@ -13,7 +13,7 @@ export default function Login({ response }) {
     <Layout children={
       <>
         <Seo type='noindex' data={{ title: "Login" }} />
-        <LoginForm shopName={data.shop.name} />
+        <LoginForm shopName={name} />
       </>
     } />
   )

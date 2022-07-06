@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Link, useNavigate} from '@shopify/hydrogen';
+import {Link, useNavigate} from '@shopify/hydrogen/client';
 export default function LoginForm({shopName}) {
   const navigate = useNavigate();
   const [showEmailField, setShowEmailField] = useState(true);
