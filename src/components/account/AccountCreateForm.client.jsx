@@ -25,6 +25,7 @@ export default function AccountCreate() {
     return 'password must be at least 6 characters';
   }
   async function handleSubmit(event) {
+    
     event.preventDefault();
     setEmailError(null);
     setPasswordError(null);

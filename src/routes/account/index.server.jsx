@@ -4,10 +4,19 @@ import Layout from '../../components/Layout.server';
 import AccountDetails from '../../components/account/AccountDetails.client';
 import OrderHistory from '../../components/account/OrderHistory.server';
 import AddressBook from '../../components/account/AddressBook.client';
+import EditAccountDetails from '../../components/account/EditAccountDetails.client';
 const Account = ({ response, editingAccount, editingAddress }) => {
   response.cache(NoStore());
   const { customerAccessToken } = useSession();
   if (!customerAccessToken) return response.redirect('/account/login');
+  if(editingAccount){
+    return(
+      <Layout children={<>
+        <Seo type='noindex' data={{title:"Account details"}}/>
+        <EditAccountDetails/>
+      </>}/>
+    )
+  }
   return <AuthenticatedAccount />;
 };
 function AuthenticatedAccount() {
