@@ -172,7 +172,6 @@ export default function EditAccountDetails() {
           <div>
             <button
               className="bg-white text-black mt-3 border  border-gray-900 uppercase py-2 px-4 focus:shadow-sm w-full block"
-              type="submit"
               onClick={close}
             >
               Cancle
