@@ -1,25 +1,28 @@
 import React, {useState} from 'react';
 import {useServerProps} from '@shopify/hydrogen';
-const EditAddress = () => {
+const EditAddress = ({address,defaultAddress}) => {
   const {setServerProps} = useServerProps();
   const close = () => setServerProps('editingAddress', null);
   const [submitError, setSubmitError] = useState(null);
   const [saving, setSaving] = useState(false);
 
-  const [address1, setAddress1] = useState('');
-  const [address2, setAddress2] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [company, setCompany] = useState('');
-  const [country, setCountry] = useState('');
-  const [province, setProvince] = useState('');
-  const [city, setCity] = useState('');
-  const [phone, setPhone] = useState('');
+  const [address1, setAddress1] = useState(address?.address1|| '');
+  const [address2, setAddress2] = useState(address?.addrees2|| '');
+  const [firstName, setFirstName] = useState(address?.firstName|| '');
+  const [lastName, setLastName] = useState(address?.lastName|| '');
+  const [company, setCompany] = useState(address?.comapny|| '');
+  const [country, setCountry] = useState(address?.country|| '');
+  const [province, setProvince] = useState(address?.province|| '');
+  const [city, setCity] = useState(address?.city|| '');
+  const [phone, setPhone] = useState(address?.phone|| '');
+
+  const [isDefaultAddress,setIsDefaultAddress] = useState(defaultAddress);
 
   async function handleSubmit(e) {
     e.preventDefault();
     setSaving(true);
     const response = await callUpdateAddressApi({
+      id:address?.originalId,
       address1,
       address2,
       firstName,
@@ -29,6 +32,7 @@ const EditAddress = () => {
       province,
       city,
       phone,
+      isDefaultAddress
     });
     setSaving(false);
     if (response.error) {
@@ -41,7 +45,7 @@ const EditAddress = () => {
     <div className="flex justify-center mt-8">
       <div className="max-w-md w-full">
         <button onClick={close}>{'< Back'}</button>
-        <h1 className="text-5xl mt-4">Add address</h1>
+        <h1 className="text-5xl mt-4">{address?'Edit Address':'Add Address'}</h1>
         <form className="mt-6" noValidate onSubmit={handleSubmit}>
           {submitError && (
             <div className="flex items-center justify-center mb-6 bg-zinc-500">
@@ -176,6 +180,8 @@ const EditAddress = () => {
               type="checkbox"
               id="defaultAddress"
               name="defaultAddress"
+              checked={isDefaultAddress}
+              onChange={()=>setIsDefaultAddress(!isDefaultAddress)}
               className="accent-black"
             />
             <label
@@ -207,6 +213,7 @@ const EditAddress = () => {
 };
 
 function callUpdateAddressApi({
+  id,
   firstName,
   lastName,
   address1,
@@ -216,9 +223,10 @@ function callUpdateAddressApi({
   province,
   city,
   phone,
+  isDefaultAddress
 }) {
-  return fetch('/account/address', {
-    method: 'POST',
+  return fetch(id?`/account/address/${encodeURIComponent(id)}`:'/account/address', {
+    method: id?'PATCH':'POST',
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
@@ -233,6 +241,7 @@ function callUpdateAddressApi({
       province,
       city,
       phone,
+      isDefaultAddress
     }),
   })
     .then((res) => {
