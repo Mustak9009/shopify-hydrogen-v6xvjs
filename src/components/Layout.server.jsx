@@ -11,8 +11,9 @@ import {Suspense} from 'react';
 import Header from './Header.client';
 const Layout = ({children}) => {
   const {languageCode} = useShop(); //useShop hook provides access to values of (hydrogen.config.js) file (keys)
-     // More info -> https://shopify.dev/api/hydrogen/hooks/global/useshop
-  const {data} = useShopQuery({ //allows you to make server-only GraphQL queries to the Storefront API
+  // More info -> https://shopify.dev/api/hydrogen/hooks/global/useshop
+  const {data} = useShopQuery({
+    //allows you to make server-only GraphQL queries to the Storefront API
     query: QUERY,
     variables: {
       language: languageCode,
@@ -25,16 +26,20 @@ const Layout = ({children}) => {
   const shopName = data ? data.shop.name : null;
   return (
     <LocalizationProvider preload="*">
-      <Header collections={collections} shopName={shopName}/>
-      <Suspense fallback={null}>{children}</Suspense>
+      <Header collections={collections} shopName={shopName} />
+      <main role="main" id="mainComponent" className="relative bg-gray-50">
+        <div className="mx-auto max-w-7xl p-4 md:py-5 md:px-8">
+          <Suspense fallback={null}>{children}</Suspense>
+        </div>
+      </main>
     </LocalizationProvider>
   );
-};  
+};
 
 const QUERY = gql`
   query layoutContent($language: LanguageCode, $numCollections: Int!)
-  @inContext(language:$language){
-    shop{
+  @inContext(language: $language) {
+    shop {
       name
     }
     collections(first: $numCollections) {

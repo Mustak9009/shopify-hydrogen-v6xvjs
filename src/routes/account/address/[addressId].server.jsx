@@ -51,7 +51,24 @@ async function upDatateAddress({request,params,customerAccessToken,queryShop}){
       cache:NoStore()
     });
     const error = getApiErrorMessage('customerAddressUpdate',data,errors);
-    if(error) return new Response(JSON.stringify({error}),{status:400})
+    if(error) return new Response(JSON.stringify({error}),{status:400});
+    
+    if(isDefaultAddress){
+        const {data,errors} = await setDefaultAddress(queryShop,decodeURIComponent(params.addressId),customerAccessToken);
+        const error = getApiErrorMessage('customerDefaultAddressUpdate',data,errors);
+        if(error) return new Response(JSON.stringify({error}),{status:400});
+    }
+    return new Response(null);
+}
+async function setDefaultAddress(queryShop,addressId,customerAccessToken){
+    return queryShop({
+        query:UPDATE_DEFAULT_ADDRESS,
+        variables:{
+            customerAccessToken,
+            addressId
+        },
+        cache:NoStore()
+    })
 }
 const  DELETE_ADDRESS = gql `
   mutation customerAddressDelete($customerAccessToken:String!,$id:ID!){
@@ -71,6 +88,17 @@ const UPDATE_ADDRESS = gql `
             customerUserErrors{
                 code
                 field
+                message
+            }
+        }
+    }
+`
+const UPDATE_DEFAULT_ADDRESS = gql `
+    mutation customerDefaultAddressUpdate($addressId:ID!,$customerAccessToken:String!){
+        customerDefaultAddressUpdate(addressId:$addressId,customerAccessToken:$customerAccessToken){
+            customerUserErrors{
+                code 
+                field 
                 message
             }
         }

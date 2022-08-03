@@ -12,7 +12,7 @@ export async function api(request,{session, queryShop}){
       const {customerAccessToken} = await session.get();
       
       if(!customerAccessToken) return new Response(null,{status:401});
-      const { firstName, lastName, address1, address2, company, country, province, city, phone,isDefaultAddress} = await request.json();
+      const { firstName, lastName, address1, address2, company, country, province, city, phone} = await request.json();
       const address = { firstName:'', lastName:'', address1:'', address2:'', company:'', country:'', province:'', city:'', phone:''}
 
       if(firstName) address.firstName = firstName;
@@ -35,9 +35,7 @@ export async function api(request,{session, queryShop}){
       });
       const error = getApiErrorMessage('customerAddressCreate',data,errors);
       if(error) return new Response(JSON.stringify({error}),{status:400})
-      if(isDefaultAddress){
-        
-      }
+    
 
 }
 const CREATE_ADDRESS = gql`

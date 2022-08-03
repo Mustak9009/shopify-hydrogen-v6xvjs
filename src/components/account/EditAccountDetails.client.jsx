@@ -2,9 +2,7 @@ import React, {useState, useCallback} from 'react';
 import {useServerProps} from '@shopify/hydrogen';
 function emailValidation(email) {
   if (email.validity.valid) return null;
-  return email.validity.valueMissing
-    ? 'please enter an email'
-    : 'please enter a valid email';
+  return email.validity.valueMissing? 'please enter an email': 'please enter a valid email';
 }
 function passwordValidation(password) {
   
@@ -14,16 +12,16 @@ function passwordValidation(password) {
   }
   return 'password must be at least 6 characters';
 }
-export default function EditAccountDetails() {
+export default function EditAccountDetails({firstName: _firstName = '', lastName: _lastName = '', phone: _phone = '', email: _email = ''}) {
   const {setServerProps} = useServerProps();
   const close = useCallback(
     () => setServerProps('editingAccount', false),
     [setServerProps],
   );
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [phone, setPhone] = useState('');
-  const [email, setEmail] = useState('');
+  const [firstName, setFirstName] = useState(_firstName);
+  const [lastName, setLastName] = useState(_lastName);
+  const [phone, setPhone] = useState(_phone);
+  const [email, setEmail] = useState(_email);
   const [emailError,setEmailError] = useState(null);
   const [saving,setSaving] = useState(false);
 
@@ -120,15 +118,17 @@ export default function EditAccountDetails() {
           </div>
           <div className="mt-3">
             <input
+              className={`mb-1 appearance-none border w-full py-2 px-3 text-gray-800 placeholder:text-gray-500 leading-tight focus:shadow-outline border-gray-900`}
               id="phone"
               name="phone"
-              value={phone}
               type="tel"
               autoComplete="tel"
-              onChange={(e) => setPhone(e.target.value)}
               placeholder="Mobile"
               aria-label="Mobile"
-              className={`mb-1 appearance-none border w-full  py-2 px-3 text-gray-800 placeholder:text-gray-500 leading-tight  focus:shadow-sm border-gray-900`}
+              value={phone}
+              onChange={(e) => {
+                setPhone(e.target.value);
+              }}
             />
           </div>
           <div className="mt-3">
@@ -204,28 +204,32 @@ function Password({name, label,passwordError}) {
   );
 }
 
-function callAccountUpdateApi({firstName,lastName,phone,email,currentPassword,newPassword}){
-    return fetch('/account',{
-        method:'PATCH',
-        headers:{
-          Accept:'application/json',
-          'Content-Type':'application/json'
-        },
-        body: JSON.stringify({
-          firstName,
-          lastName,
-          phone,
-          email,
-          currentPassword,
-          newPassword
-        })
-    }).then((res)=>{
-      if(res.ok){
-        return{};
-      }else{
+function callAccountUpdateApi({ email, phone, firstName, lastName, currentPassword, newPassword}) {
+  return fetch(`/account`, {
+    method: 'PATCH',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      email,
+      phone,
+      firstName,
+      lastName,
+      currentPassword,
+      newPassword,
+    }),
+  })
+    .then((res) => {
+      if (res.ok) {
+        return {};
+      } else {
         return res.json();
       }
-    }).catch(()=>{
-      return {error:'Error saving account. Please try again.'}
     })
+    .catch(() => {
+      return {
+        error: 'Error saving account. Please try again.',
+      };
+    });
 }
