@@ -5,7 +5,6 @@ import {
   Route,
   Router,
   FileRoutes,
-  ShopifyAnalytics
 } from '@shopify/hydrogen';
 import LoadingFallBack from './components/LoadingFallBack';
 import NotFound from './components/NotFound';
@@ -17,7 +16,6 @@ const App = () => {
           <FileRoutes />
           <Route path="*" page={<NotFound />}></Route>
         </Router>
-        <ShopifyAnalytics />
       </ShopifyProvider>
     </Suspense>
   );

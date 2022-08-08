@@ -10,7 +10,9 @@ import {
 } from '@shopify/hydrogen';
 import Layout from '../../components/Layout.server';
 import ProductCard from '../../components/ProductCard';
-export default function Collection({params}) {
+import LodeMoreProducts from '../../components/LodeMoreProducts.client';
+import NotFound from '../../components/NotFound';
+export default function Collection({collectionProductCount = 5, params}) {
   const {languageCode} = useShop();
   const {countryCode = 'US'} = useSession();
   const {handle} = params;
@@ -20,14 +22,13 @@ export default function Collection({params}) {
       handle,
       country: countryCode,
       language: languageCode,
-      numProducts: 24,
+      numProducts: collectionProductCount,
     },
     preload: true,
   });
   const collection = data.collection;
   const products = data.collection.products.nodes;
   const hasNextPage = data.collection.products.pageInfo.hasNextPage;
-
   useServerAnalytics(
     data?.collection
       ? {
@@ -38,6 +39,10 @@ export default function Collection({params}) {
         }
       : null,
   );
+  if (data?.collection == null) {
+    return <NotFound />;
+  }
+
   return (
     <Layout
       children={
@@ -54,13 +59,16 @@ export default function Collection({params}) {
           <p className="text-sm mb-5 mt-5 text-gray-500">
             {products.length} {products.length > 1 ? 'products' : 'product'}
           </p>
-          <ul className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16'>
+          <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
             {products.map((product) => (
               <li key={product.id}>
                 <ProductCard product={product} />
               </li>
             ))}
           </ul>
+          {hasNextPage && (
+            <LodeMoreProducts startingCount={collectionProductCount} />
+          )}
         </>
       }
     />
