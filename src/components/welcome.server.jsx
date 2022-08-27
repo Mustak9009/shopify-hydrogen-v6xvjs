@@ -38,17 +38,19 @@ function StoreFrontInfo() {
     },
     preload: true,
   });
-  const shopName = data ? data.shop.name :"";
+  const shopName = data ? data.shop.name : '';
   const products = data && flattenConnection(data.products);
   const collections = data && flattenConnection(data.collections);
   const totalProduct = products && products.length;
   const totalCollection = collections && collections.length;
-  console.log(products)
+  console.log(products);
   return (
     <div className="bg-white shadow-xl p-12 rounded-xl text-gray-900">
       <p className="text-md font-medium uppercase mb-4">Connected Storefront</p>
-      <h2 className="text-2xl font-bold mb-4">HYDROGEN</h2>
+      <h2 className="text-2xl font-bold mb-4">{shopName}</h2>
       <p className="text-base">3 Product, 3 Collections</p>
+      <hr className="my-4" />
+      <a href='https://shopify.dev/custom-storefronts/hydrogen/getting-started/create#step-2-update-information-about-your-shopify-storefront' target="_blank" rel="noreferrer" className="text-base inline-flex items-center text-blue-700 font-medium hover:underline">Change your storefront access token  <ExternalIcon /></a>
     </div>
   );
 }
