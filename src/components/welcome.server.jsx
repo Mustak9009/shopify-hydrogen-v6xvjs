@@ -1,5 +1,11 @@
-import {flattenConnection, gql, useShop, useShopQuery} from '@shopify/hydrogen';
-import React from 'react';
+import {
+  flattenConnection,
+  gql,
+  Link,
+  useShop,
+  useShopQuery,
+} from '@shopify/hydrogen';
+import React, {Suspense} from 'react';
 
 function ExternalIcon() {
   return (
@@ -43,21 +49,101 @@ function StoreFrontInfo() {
   const collections = data && flattenConnection(data.collections);
   const totalProduct = products && products.length;
   const totalCollection = collections && collections.length;
-  console.log(products);
+  //Get product and collection number (suffix parameter use for -> plural number)
+  const pluralize = (count, noun, suffix = 's') =>
+    `${count} ${noun}${count === 1 ? '' : suffix}`;
+
   return (
     <div className="bg-white shadow-xl p-12 rounded-xl text-gray-900">
       <p className="text-md font-medium uppercase mb-4">Connected Storefront</p>
       <h2 className="text-2xl font-bold mb-4">{shopName}</h2>
-      <p className="text-base">3 Product, 3 Collections</p>
+      <p className="text-base">
+        {pluralize(totalProduct, 'Product')}
+        {','}
+        {pluralize(totalCollection, 'Collections')}
+      </p>
+      {totalCollection === 0 && totalProduct === 0 && (
+        <div className="py-2 px-3 bg-red-100 text-md">
+          Use the
+          <a
+            href="https://shopify.dev/apps/tools/cli/getting-started"
+            className="text-primary font-mono font-bold underline"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Shopify CLI
+          </a>
+          to populate sample products and collections.
+        </div>
+      )}
       <hr className="my-4" />
-      <a href='https://shopify.dev/custom-storefronts/hydrogen/getting-started/create#step-2-update-information-about-your-shopify-storefront' target="_blank" rel="noreferrer" className="text-base inline-flex items-center text-blue-700 font-medium hover:underline">Change your storefront access token  <ExternalIcon /></a>
+      <a
+        href="https://shopify.dev/custom-storefronts/hydrogen/getting-started/create#step-2-update-information-about-your-shopify-storefront"
+        target="_blank"
+        rel="noreferrer"
+        className="text-base inline-flex items-center text-blue-700 font-medium hover:underline"
+      >
+        Change your storefront access token <ExternalIcon />
+      </a>
     </div>
   );
+}
+function TempleteLinks() {
+  const {languageCode} = useShop();
+  const {data} = useShopQuery({
+    query: QUERY,
+    variables: {
+      language: languageCode,
+    },
+    preload: true,
+  });
+  const products = data && flattenConnection(data.products);
+  const collections = data && flattenConnection(data.collections);
+
+  const firstProduct = products && products.length ? products[0].handle : '';
+  const firstCollection = collections[0] ? collections[0].handle : '';
+  return (
+    <div className="bg-white p-12 md:p-12 shadow-xl rounded-xl text-gray-900">
+      <p className="text-base font-medium uppercase mb-4">
+        Explore the templates
+      </p>
+      <ul>
+        <li className="mb-4">
+          <Link
+            className="text-base font-medium text-blue-700 hover:underline"
+            to={`/collections/${firstCollection}`}
+          >
+            Collection template
+          </Link>
+        </li>
+        <li className="mb-4">
+          <Link
+            className="text-base font-medium text-blue-700 hover:underline"
+            to={`/products/${firstProduct}`}
+          >
+            Product template
+          </Link>
+        </li>
+        <li className="mb-4">
+          <Link
+            className="text-base font-medium text-blue-700 hover:underline"
+            to="/error-page"
+          >
+            404 template
+          </Link>
+        </li>
+      </ul>
+    </div>
+  );
+}
+function BoxFallBack(){
+  return(
+    <div className='bg-white p-12 md:p-12 shadow-xl rounded-xl text-gray-900 h-60'></div>
+  )
 }
 export default function Welcome() {
   return (
     <div className="text-gray-900 pt-16 rounded-[40px] my-16 px-4 xl:px-12 bg-gradient-to-b from-white -mx-4 xl:-mx-12">
-      {' '}
       {/*bg-gradient-to-b or from-white -> use for background transition*/}
       <div className="text-center mb-16">
         <h1 className="font-extrabold mb-4 text-5xl md:text-7xl">
@@ -78,8 +164,13 @@ export default function Welcome() {
           />
         </div>
       </div>
-      <div>
-        <StoreFrontInfo />
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16">
+        <Suspense fallback={<BoxFallBack/>}>
+          <StoreFrontInfo />
+        </Suspense>
+        <Suspense fallback={<BoxFallBack/>}>
+          <TempleteLinks />
+        </Suspense>
       </div>
     </div>
   );
