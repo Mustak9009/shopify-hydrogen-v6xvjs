@@ -141,6 +141,7 @@ function BoxFallBack(){
     <div className='bg-white p-12 md:p-12 shadow-xl rounded-xl text-gray-900 h-60'></div>
   )
 }
+
 export default function Welcome() {
   return (
     <div className="text-gray-900 pt-16 rounded-[40px] my-16 px-4 xl:px-12 bg-gradient-to-b from-white -mx-4 xl:-mx-12">
