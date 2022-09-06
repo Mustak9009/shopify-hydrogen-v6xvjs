@@ -136,6 +136,7 @@ const QUERY = gql`
             height
             altText
           }
+         
           priceV2 {
             amount
             currencyCode

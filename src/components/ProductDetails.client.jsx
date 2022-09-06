@@ -3,8 +3,12 @@ import {
   ProductOptionsProvider,
   useProductOptions,
   ProductPrice,
+  AddToCartButton,
+  BuyNowButton
 } from '@shopify/hydrogen';
 import Gallery from './Gallery.client';
+import ProductOptions from './ProductOptions.client';
+import {BUTTON_PRIMARY_CLASS,BUTTON_SECONDARY_CLASS} from './Button.client';
 function ProductPrices({product}) {
   const {selectedVariant} = useProductOptions(); //useProductOptions help you to (get,set,track) product variant
   return (
@@ -21,6 +25,21 @@ function ProductPrices({product}) {
         className="text-gray-900  text-lg font-semibold"
       />
     </>
+  );
+}
+function AddToCartMarkup(){
+  const {selectedVariant} = useProductOptions();
+  //alternate the -> availableForSale value because of -> 40 line
+  const isOutOfstock = !selectedVariant.availableForSale; //Change->availableForSale value usnig -> not(!)
+  return (
+    <div className='space-y-2 mb-8'>
+        <AddToCartButton  disabled={isOutOfstock} className={BUTTON_PRIMARY_CLASS}>
+          {isOutOfstock?"Out of stock":"Add to bag"}
+        </AddToCartButton>
+        {isOutOfstock?(
+          <p className='text-center text-black'>Available in 2-3 weeks</p>
+        ):(<BuyNowButton variantId={selectedVariant.id} className={BUTTON_SECONDARY_CLASS}>Buy it now</BuyNowButton>)}
+    </div>
   );
 }
 export default function ProductDetails({product}) {
@@ -44,7 +63,7 @@ export default function ProductDetails({product}) {
             <ProductPrices product={product} />
           </div>
         </div>
-        <Gallery product={product}/>
+        <Gallery product={product} />
         <div>
           <div className="hidden md:block">
             <h1 className="text-3xl font-bold text-black mb-4">
@@ -58,6 +77,8 @@ export default function ProductDetails({product}) {
             <ProductPrices product={product} />
           </div>
           <div className="mt-8">
+            <ProductOptions />
+            <AddToCartMarkup/>
             <div className="flex space-x-4">
               <span className="flex items-center mb-8">
                 <svg
@@ -101,7 +122,10 @@ export default function ProductDetails({product}) {
               </span>
             </div>
           </div>
-          <div dangerouslySetInnerHTML={{__html: product.descriptionHtml}} className="Product_information"/>
+          <div
+            dangerouslySetInnerHTML={{__html: product.descriptionHtml}}
+            className="Product_information"
+          />
         </div>
       </div>
     </ProductOptionsProvider>

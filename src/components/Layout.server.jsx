@@ -9,7 +9,8 @@ import {
 } from '@shopify/hydrogen';
 import {Suspense} from 'react';
 import Header from './Header.client';
-const Layout = ({children,hero}) => {
+import Cart from './Cart.client';
+const Layout = ({children, hero}) => {
   const {languageCode} = useShop(); //useShop hook provides access to values of (hydrogen.config.js) file (keys)
   // More info -> https://shopify.dev/api/hydrogen/hooks/global/useshop
   const {data} = useShopQuery({
@@ -26,7 +27,10 @@ const Layout = ({children,hero}) => {
   const shopName = data ? data.shop.name : null;
   return (
     <LocalizationProvider preload="*">
-      <Header collections={collections} shopName={shopName} />
+      <Suspense fallback={null}>
+        <Header collections={collections} shopName={shopName} />
+        <Cart />
+      </Suspense>
       <main role="main" id="mainComponent" className="relative bg-gray-50">
         {hero}
         <div className="mx-auto max-w-7xl p-4 md:py-5 md:px-8">
