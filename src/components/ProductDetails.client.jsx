@@ -4,7 +4,7 @@ import {
   useProductOptions,
   ProductPrice,
   AddToCartButton,
-  BuyNowButton
+  BuyNowButton,
 } from '@shopify/hydrogen';
 import Gallery from './Gallery.client';
 import ProductOptions from './ProductOptions.client';
@@ -31,6 +31,7 @@ function AddToCartMarkup(){
   const {selectedVariant} = useProductOptions();
   //alternate the -> availableForSale value because of -> 40 line
   const isOutOfstock = !selectedVariant.availableForSale; //Change->availableForSale value usnig -> not(!)
+  
   return (
     <div className='space-y-2 mb-8'>
         <AddToCartButton  disabled={isOutOfstock} className={BUTTON_PRIMARY_CLASS}>
@@ -44,7 +45,6 @@ function AddToCartMarkup(){
 }
 export default function ProductDetails({product}) {
   const initialVariant = product.variants.nodes[0];
- 
   return (
     <ProductOptionsProvider data={product} initialVariantId={initialVariant.id}>
       {/*ProductOptionsProvider use for -> Track which varient user select*/}

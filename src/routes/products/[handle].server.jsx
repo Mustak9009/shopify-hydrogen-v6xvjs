@@ -8,11 +8,12 @@ import {
 } from '@shopify/hydrogen';
 import Layout from '../../components/Layout.server';
 import ProductDetails from '../../components/ProductDetails.client';
+import LoginForm from '../../components/account/LoginForm.client';
 export default function Hanlde() {
   const {handle} = useRouteParams();
   const {languageCode} = useShop();
-  
-  const {countryCode = 'US'} = useSession();
+  const {countryCode = 'IN',customerAccessToken} = useSession();
+ 
   const {data:{product}} = useShopQuery({
     query: QUERY,
     variables: {
@@ -22,13 +23,12 @@ export default function Hanlde() {
     },
     preload: true,
   });
- 
   return (
     <Layout
       children={
         <>
           <Seo type="product" data={product} />
-          <ProductDetails product={product}/>
+          {customerAccessToken ? <ProductDetails product={product} />: <LoginForm/>}
         </>
       }
     />

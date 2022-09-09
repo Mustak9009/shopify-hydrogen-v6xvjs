@@ -19,7 +19,19 @@ const VARIANT_CLASS = {
 };
 export const BUTTON_PRIMARY_CLASS = `${DEFAULT_CLASS}${VARIANT_CLASS.primary}`;
 export const BUTTON_SECONDARY_CLASS = `${DEFAULT_CLASS}${VARIANT_CLASS.secondary}`;
-export default function Button() {
+export default function Button({className,url,label,varient="primary"}) {
+  const classes = `${DEFAULT_CLASS} ${VARIANT_CLASS[varient]} ${className}`;
+  const isExterNal = url ? url.indexOf("//") === 0 || url.indexOf("://") > 0 : false; //Check the url is -> External or not  -> indexOf is function help to get 'string/text' index(return in number)
+  console.log(isExterNal);
+  console.log(url)
+  if(isExterNal){
+    return(
+      <a href={url} className={classes} >
+        {label}
+        <ExternalIcon/>
+      </a>
+    )
+  }
   return (
     <div>Button</div>
   )

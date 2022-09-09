@@ -2,8 +2,8 @@ import React from 'react';
 import CountrySelector from './CountrySelector.client';
 import Navigation from './Navigation.client';
 import {Link} from '@shopify/hydrogen';
-import CartIcon from './CartIcon';
 import AccountIcon from './AccountIcon';
+import CartToggle from './CartToggle.client';
 const Header = ({collections, shopName}) => {
   return (
     <>
@@ -22,7 +22,7 @@ const Header = ({collections, shopName}) => {
                 <Link to="/account">
                   <AccountIcon />
                 </Link>
-                <CartIcon />
+                <CartToggle/>
               </div>
             </div>
             <Navigation collections={collections} />

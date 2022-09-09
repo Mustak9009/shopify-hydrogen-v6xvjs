@@ -2,7 +2,7 @@ import renderHydrogen from '@shopify/hydrogen/entry-server';
 import React, {Suspense} from 'react';
 import {ShopifyProvider, Route, Router, FileRoutes} from '@shopify/hydrogen';
 import LoadingFallBack from './components/LoadingFallBack';
-import NotFound from './components/NotFound';
+import NotFound from './components/NotFound.server';
 import ServerCartProvider from './components/ServerCartProvider.server';
 
 const App = () => {

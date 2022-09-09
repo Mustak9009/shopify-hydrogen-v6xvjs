@@ -11,7 +11,7 @@ import {
 import Layout from '../../components/Layout.server';
 import ProductCard from '../../components/ProductCard';
 import LodeMoreProducts from '../../components/LodeMoreProducts.client';
-import NotFound from '../../components/NotFound';
+import NotFound from '../../components/NotFound.server';
 export default function Collection({collectionProductCount = 5, params}) {
   const {languageCode} = useShop();
   const {countryCode = 'US'} = useSession();

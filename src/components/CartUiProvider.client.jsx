@@ -5,10 +5,10 @@ export const CartContext = createContext(null);
 export default function CartUiProvider({children}) {
   const [open,setOpen]  = useState(false);
   const openCart = useCallback(()=>{
-    setOpen(true)
+    setOpen(true);
   },[setOpen]);
   const closeCart = useCallback(()=>{
-    setOpen(false)
+    setOpen(false);
   },[setOpen]);
   const toggleCart = useCallback(()=>{
     setOpen(!open);
