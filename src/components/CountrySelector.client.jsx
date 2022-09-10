@@ -15,7 +15,7 @@ const CountrySelector = () => {
   }, []);
   return (
     <>
-      <div>
+      <div className='hidden lg:block'>
         {/*Listbox use create drop-down menu -> https://headlessui.dev/react/listbox*/}
         <Listbox onChange={setCountry}> 
           {({open}) => {
